@@ -1,6 +1,6 @@
 from lark import Lark, Transformer
 
-__version__ = "1.0.0"
+__version__ = "1.0.2"
 __author__ = "vancura"
 
 grammar = """
@@ -21,7 +21,7 @@ parser = Lark(grammar, start="pair")
 class TreeTransformer(Transformer):
 	def pair(self, items):
 		key, value = items
-		return key, value
+		return (key, value)
 
 	def value(self, items):
 		return items[0]
@@ -82,6 +82,7 @@ def loads(s):
 
 def load(f):
 	"""
+	@FileAccess
 	@type fun(f: TextIO) -> dict
 	"""
 	return _parse(f.read())
@@ -94,6 +95,7 @@ def dumps(d, pretty=True):
 
 def dump(d, f, pretty=True):
 	"""
+	@FileAccess
 	@type fun(d: dict, f: TextIO, pretty: bool)
 	"""
 	f.write(dumps(d, pretty))
